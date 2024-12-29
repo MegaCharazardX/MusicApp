@@ -3,11 +3,12 @@ import sqlite3
 
 Dir = "E:/Dhejus/Songs"
 
-class DBConfig:
-    def __init__(self):
+class DBOperation:
+    def __init__(self, Database = "MusicPlayerDataBase.db"):
         self.SelectQuery = "SELECT {} FROM {}"
         self.UpdateQuery = "UPDATE {} SET {}"
-        self.con = sqlite3.connect("MusicPlayerDataBase.db")
+        self.InsertQuery = "INSERT INTO {} VALUES {}"
+        self.con = sqlite3.connect(Database)
         self.cur = self.con.cursor()
 
     def initDB(self):
@@ -52,13 +53,15 @@ class DBConfig:
         if Condition :
             tempSelectQuery = self.SelectQuery + " WHERE {}"
             tempQry = tempSelectQuery.format(Feilds, Table, Condition)
-            print(tempQry)
+            #print(tempQry)
             result = self.cur.execute(tempQry)
+            return result
             for i in result:
                 print(i)
         else:
             tempQry = self.SelectQuery.format(Feilds, Table)
             result = self.cur.execute(tempQry)
+            return result
             for i in result:
                 print(i)
     
@@ -70,9 +73,10 @@ class DBConfig:
         else: 
             tempQuery = self.SelectQuery.format(Table, assignment )
             self.cur.execute(tempQuery)
+    
             
                 
         
-DBConfig().Select(Table="Music")                  
+
 
     

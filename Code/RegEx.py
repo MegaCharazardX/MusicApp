@@ -1,4 +1,5 @@
 import re
+from DBConfig import DBOperation
 
 VALID = "Valid"
 INVALID = "Invalid"
@@ -14,6 +15,22 @@ class RegEx:
             return False
         else:
             return True
-
+        
+    def IsPasswordStrong(self, password):
+        """
+            At least 8 characters long.
+            Contains at least one uppercase letter (A-Z).
+            Contains at least one lowercase letter (a-z).
+            Contains at least one digit (0-9).
+            Contains at least one special character (@#$%^&*! or others).
+            Must not contain or be a combination of variations of the word "password"
+        """
+        self.__PasswordRegEx = re.compile(r"^(?!.*([Pp][Aa@][Ss$5][Ss$5][Ww][Oo0][Rr][Dd])).(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$")
+        if re.match(self.__PasswordRegEx, password):
+            return "Strong Password"
+        else:
+            return "Weak Password"
+        
+        
 gmail = RegEx(input("Enter Gmail Address : "))
-print(gmail.IsGmailValid())
+print(gmail.IsPasswordStrong("password"))
